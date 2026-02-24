@@ -4,7 +4,7 @@ import (
 	"github.com/tink-crypto/tink-go/v2/aead/subtle"
 )
 
-// ChaCha20Poly1305 key 为加密数据, associatedData 为任意关联数据(可以为空 []byte{})
+// ChaCha20Poly1305 key(32bit), associatedData 为任意关联数据(可以为空 []byte{})
 type ChaCha20Poly1305 struct {
 	Key            []byte
 	AssociatedData []byte

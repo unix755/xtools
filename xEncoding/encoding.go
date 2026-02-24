@@ -34,6 +34,7 @@ func URLToTarget[T any](target *T, targetType string, url string) error {
 	if err != nil {
 		return err
 	}
+	defer response.Body.Close()
 
 	// body 解码
 	switch targetType {

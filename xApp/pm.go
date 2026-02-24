@@ -3,19 +3,19 @@ package xApp
 import (
 	"fmt"
 
-	"github.com/unix755/xtools/xApp/pm"
-	"github.com/unix755/xtools/xApp/pm/apk"
-	"github.com/unix755/xtools/xApp/pm/apt"
-	"github.com/unix755/xtools/xApp/pm/pkg"
+	"github.com/unix755/xtools/xApp/packageManager"
+	"github.com/unix755/xtools/xApp/packageManager/apk"
+	"github.com/unix755/xtools/xApp/packageManager/apt"
+	"github.com/unix755/xtools/xApp/packageManager/pkg"
 )
 
 type Pm struct {
-	pm.Pm
+	packageManager.Pm
 }
 
 // NewPm 新建包管理器
 func NewPm(pkgManager string, pkgName string) (*Pm, error) {
-	var np pm.Pm
+	var np packageManager.Pm
 	switch pkgManager {
 	case "apt":
 		np = apt.NewPm(pkgName)

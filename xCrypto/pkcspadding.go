@@ -1,8 +1,8 @@
-package padding
+package xCrypto
 
 import "bytes"
 
-// PKCSPadding PKCS#7 填充
+// PKCSPadding PKCS#7 填充, ciphertext 密文, blockSize 填充到的 bit 大小
 func PKCSPadding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padText := bytes.Repeat([]byte{byte(padding)}, padding)

@@ -1,8 +1,8 @@
-package padding
+package xCrypto
 
 import "bytes"
 
-// ZeroPadding 零填充
+// ZeroPadding 零填充, ciphertext 密文, blockSize 填充到的 bit 大小
 func ZeroPadding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padText := bytes.Repeat([]byte{0}, padding)

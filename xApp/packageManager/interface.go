@@ -1,4 +1,4 @@
-package pm
+package packageManager
 
 type Pm interface {
 	Install() (err error)
