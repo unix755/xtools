@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/unix755/xtools/xXml"
+	"github.com/unix755/xtools/xEncoding"
 )
 
 type Release struct {
@@ -23,13 +23,7 @@ type Item struct {
 }
 
 func GetReleaseByRss(rssUrl string) (r *Release, err error) {
-	// 新建xml处理体
-	xmlOperator, err := xXml.NewXmlOperator(&r)
-	if err != nil {
-		return nil, err
-	}
-	// xml处理体从URL中读取xml数据,数据存储到结构体中
-	return r, xmlOperator.ReadFromURL(rssUrl)
+	return r, xEncoding.URLToTarget(&r, "xml", rssUrl)
 }
 
 func (r *Release) GetAssets(includes []string, excludes []string) (assets []Item) {

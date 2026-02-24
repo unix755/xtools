@@ -20,9 +20,6 @@ func (c *Client) SendWebDavRequest(method string, path string, data []byte) (res
 	}
 	request.SetBasicAuth(c.Username, c.Password)
 
-	// allow insecure cert in all clients
-	//http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-
 	// allow insecure cert in a client
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: c.AllowInsecure},

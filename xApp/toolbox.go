@@ -1,7 +1,6 @@
-package xToolbox
+package xApp
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 )
@@ -14,9 +13,6 @@ func CheckToolbox(toolbox []string) (missItems []string, err error) {
 		if err != nil {
 			missItems = append(missItems, tool)
 		}
-	}
-	if len(missItems) != 0 {
-		err = fmt.Errorf("can not find %s", missItems)
 	}
 	return missItems, err
 }

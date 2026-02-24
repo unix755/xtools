@@ -4,7 +4,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/unix755/xtools/xJson"
+	"github.com/unix755/xtools/xEncoding"
 )
 
 type Release struct {
@@ -23,13 +23,7 @@ type Assets struct {
 // https://docs.github.com/en/rest/releases
 // https://api.github.com/repos/microsoft/terminal/releases
 func newRelease[T *[]Release | *Release](releaseApiUrl string) (r T, err error) {
-	// 新建 json 处理器
-	jsonOperator, err := xJson.NewJsonOperator(&r)
-	if err != nil {
-		return nil, err
-	}
-	// 从 releaseApiUrl 中读取数据存储到结构体中
-	return r, jsonOperator.ReadFromURL(releaseApiUrl)
+	return r, xEncoding.URLToTarget(&r, "json", releaseApiUrl)
 }
 
 func GetReleases(repo string) (rs *[]Release, err error) {

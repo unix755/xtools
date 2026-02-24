@@ -18,10 +18,10 @@ func Uninstall(pkg string) (err error) {
 	return xExec.Run(exec.Command("pkg", "autoremove", "-y"))
 }
 
-func Refresh() (err error) {
-	return xExec.Run(exec.Command("pkg", "update"))
+func Upgrade(pkg string) (err error) {
+	return xExec.Run(exec.Command("pkg", "upgrade", "-y", pkg))
 }
 
-func Update(pkg string) (err error) {
-	return xExec.Run(exec.Command("pkg", "upgrade", "-y", pkg))
+func update() (err error) {
+	return xExec.Run(exec.Command("pkg", "update"))
 }

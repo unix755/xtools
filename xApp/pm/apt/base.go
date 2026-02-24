@@ -14,10 +14,10 @@ func Uninstall(pkg string) (err error) {
 	return xExec.Run(exec.Command("apt", "purge", "-y", "--autoremove", pkg))
 }
 
-func Refresh() (err error) {
-	return xExec.Run(exec.Command("apt", "update"))
+func Upgrade(pkg string) (err error) {
+	return xExec.Run(exec.Command("apt", "upgrade", "-y", pkg))
 }
 
-func Update(pkg string) (err error) {
-	return xExec.Run(exec.Command("apt", "upgrade", "-y", pkg))
+func update() (err error) {
+	return xExec.Run(exec.Command("apt", "update"))
 }

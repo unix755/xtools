@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"net/http"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
@@ -21,12 +20,11 @@ func NewS3Client(endpoint string, region string, accessKeyId string, secretAcces
 
 	return &Client{
 		S3Client: s3.New(s3.Options{
-			BaseEndpoint: aws.String(endpoint),
+			BaseEndpoint: &endpoint,
 			Region:       region,
 			Credentials:  credentials.NewStaticCredentialsProvider(accessKeyId, secretAccessKey, stsToken),
+			UsePathStyle: usePathStyle,
 			HTTPClient:   &httpClient,
-		}, func(options *s3.Options) {
-			options.UsePathStyle = usePathStyle
 		}),
 	}
 }

@@ -1,28 +1,21 @@
 package xCrypto
 
 import (
-	"hash"
-
 	"github.com/tink-crypto/tink-go/v2/aead/subtle"
 )
 
+// ChaCha20Poly1305 key 为加密数据, associatedData 为任意关联数据(可以为空 []byte{})
 type ChaCha20Poly1305 struct {
 	Key            []byte
 	AssociatedData []byte
 }
 
+// NewChaCha20Poly1305 新建 ChaCha20-Poly1305 加密
 func NewChaCha20Poly1305(key []byte, associatedData []byte) *ChaCha20Poly1305 {
 	return &ChaCha20Poly1305{
 		Key:            key,
 		AssociatedData: associatedData,
 	}
-}
-
-// NewChaCha20Poly1305WithHashAD use hash as associated data, associated data will not be encrypted
-func NewChaCha20Poly1305WithHashAD(key []byte, h hash.Hash) *ChaCha20Poly1305 {
-	h.Reset()
-	h.Write(key)
-	return NewChaCha20Poly1305(key, h.Sum(nil))
 }
 
 func (c *ChaCha20Poly1305) Encrypt(plaintext []byte) ([]byte, error) {

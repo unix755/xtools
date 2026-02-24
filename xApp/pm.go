@@ -39,7 +39,7 @@ func (p *Pm) Uninstall() (err error) {
 	return p.Pm.Uninstall()
 }
 
-// Update 更新包
-func (p *Pm) Update() (err error) {
-	return p.Pm.Update()
+// Upgrade 更新包
+func (p *Pm) Upgrade() (err error) {
+	return p.Pm.Upgrade()
 }

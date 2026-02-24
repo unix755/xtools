@@ -3,45 +3,33 @@ package xS3
 import (
 	"bytes"
 	"context"
+	"io"
 	"os"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
+	"github.com/aws/aws-sdk-go-v2/feature/s3/transfermanager"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
-// 用法 https://docs.aws.amazon.com/zh_cn/code-library/latest/ug/go_2_s3_code_examples.html
-
-func (c *Client) UploadObject(bucket string, filename string, data []byte) (*manager.UploadOutput, error) {
-	return manager.NewUploader(c.S3Client).Upload(context.TODO(), &s3.PutObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(filename),
-		Body:   bytes.NewReader(data)},
-	)
+func (c *Client) UploadObject(bucket string, key string, data []byte) (*transfermanager.UploadObjectOutput, error) {
+	return transfermanager.New(c.S3Client).UploadObject(context.TODO(), &transfermanager.UploadObjectInput{Bucket: &bucket, Key: &key, Body: bytes.NewReader(data)})
 }
 
-func (c *Client) DownloadObject(bucket string, filename string, downloadFilename string) error {
-	bs, err := c.GetObject(bucket, filename)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(downloadFilename, bs, 0644)
-}
-
-func (c *Client) GetObject(bucket string, filename string) ([]byte, error) {
-	buffer := manager.NewWriteAtBuffer([]byte{})
-
-	_, err := manager.NewDownloader(c.S3Client).Download(context.TODO(), buffer, &s3.GetObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(filename),
-	})
+func (c *Client) GetObject(bucket string, key string) ([]byte, error) {
+	getObjectOutput, err := transfermanager.New(c.S3Client).GetObject(context.TODO(), &transfermanager.GetObjectInput{Bucket: &bucket, Key: &key})
 	if err != nil {
 		return nil, err
 	}
-
-	return buffer.Bytes(), nil
+	return io.ReadAll(getObjectOutput.Body)
 }
 
-func (c *Client) DeleteObject(bucket string, filename string) (*s3.DeleteObjectOutput, error) {
-	return c.S3Client.DeleteObject(context.TODO(), &s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String(filename)})
+func (c *Client) DownloadObject(bucket string, key string, filename string) (err error) {
+	bs, err := c.GetObject(bucket, key)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filename, bs, 0644)
+}
+
+func (c *Client) DeleteObject(bucket string, key string) (*s3.DeleteObjectOutput, error) {
+	return c.S3Client.DeleteObject(context.TODO(), &s3.DeleteObjectInput{Bucket: &bucket, Key: &key})
 }

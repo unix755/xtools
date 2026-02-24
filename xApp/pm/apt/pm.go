@@ -9,7 +9,7 @@ func NewPm(name string) (p *Pm) {
 }
 
 func (p *Pm) Install() (err error) {
-	err = Refresh()
+	err = update()
 	if err != nil {
 		return err
 	}
@@ -20,6 +20,10 @@ func (p *Pm) Uninstall() (err error) {
 	return Uninstall(p.Name)
 }
 
-func (p *Pm) Update() (err error) {
-	return Update(p.Name)
+func (p *Pm) Upgrade() (err error) {
+	err = update()
+	if err != nil {
+		return err
+	}
+	return Upgrade(p.Name)
 }
