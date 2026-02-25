@@ -22,7 +22,7 @@ func (c *Client) SendWebDavRequest(method string, path string, data []byte) (res
 
 	// allow insecure cert in a client
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: c.AllowInsecure},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: c.SkipTLSVerify},
 	}
 	client := http.Client{Transport: tr}
 

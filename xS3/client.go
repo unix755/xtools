@@ -12,9 +12,9 @@ type Client struct {
 	S3Client *s3.Client
 }
 
-func NewS3Client(endpoint string, region string, accessKeyId string, secretAccessKey string, stsToken string, usePathStyle bool, allowInsecure bool) (client *Client) {
+func NewS3Client(endpoint string, region string, accessKeyId string, secretAccessKey string, stsToken string, usePathStyle bool, skipTLSVerify bool) (client *Client) {
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: allowInsecure},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: skipTLSVerify},
 	}
 	httpClient := http.Client{Transport: tr}
 

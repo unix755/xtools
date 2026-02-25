@@ -6,10 +6,10 @@ type Client struct {
 	Endpoint      *url.URL
 	Username      string
 	Password      string
-	AllowInsecure bool
+	SkipTLSVerify bool
 }
 
-func NewClient(endpoint string, username string, password string, allowInsecure bool) (client *Client, err error) {
+func NewClient(endpoint string, username string, password string, skipTLSVerify bool) (client *Client, err error) {
 	parsedURL, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
@@ -19,6 +19,6 @@ func NewClient(endpoint string, username string, password string, allowInsecure 
 		Endpoint:      parsedURL,
 		Username:      username,
 		Password:      password,
-		AllowInsecure: allowInsecure,
+		SkipTLSVerify: skipTLSVerify,
 	}, nil
 }
